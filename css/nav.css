@@ -1,0 +1,98 @@
+/* ============================================================
+   NAV
+   ============================================================ */
+.nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  padding: .95rem 0;
+  transition: background .45s var(--ease-soft), box-shadow .45s;
+}
+.nav-inner { display: flex; align-items: center; justify-content: space-between; }
+.nav-logo {
+  font-family: var(--serif); font-weight: 400; font-size: 1.35rem;
+  color: var(--on-dark); letter-spacing: .02em; transition: color .4s;
+}
+.nav-logo .mark { color: var(--gold); margin-right: .35rem; }
+.nav-links { display: flex; align-items: center; gap: 2.2rem; list-style: none; }
+.nav-links a {
+  font: 500 .82rem var(--sans); letter-spacing: .14em; text-transform: uppercase;
+  color: var(--on-dark-soft); transition: color .3s; position: relative;
+}
+.nav-links a:not(.nav-cta)::after {
+  content: ""; position: absolute; left: 0; bottom: -5px;
+  width: 100%; height: 1px; background: currentColor;
+  transform: scaleX(0); transform-origin: right;
+  transition: transform .4s var(--ease-out);
+}
+.nav-links a:not(.nav-cta):hover { color: var(--on-dark); }
+.nav-links a:not(.nav-cta):hover::after { transform: scaleX(1); transform-origin: left; }
+.nav-cta {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-height: 44px; padding: .6rem 1.3rem; border-radius: 99px;
+  border: 1.5px solid oklch(95.9% 0.008 79 / 0.35);
+  color: var(--on-dark) !important; transition: all .35s var(--ease-out);
+}
+.nav-cta:hover { background: var(--gold); border-color: var(--gold); color: var(--band-deep) !important; }
+
+.nav.scrolled {
+  background: oklch(95.9% 0.008 79 / 0.85);
+  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  box-shadow: 0 1px 0 oklch(24% 0.022 55 / 0.08);
+}
+/* backdrop-filter creates a containing block for position:fixed descendants —
+   without this, the mobile dropdown panel collapses into the nav bar's own
+   box instead of positioning against the viewport whenever it's opened while scrolled */
+.nav.menu-open {
+  backdrop-filter: none; -webkit-backdrop-filter: none;
+}
+.nav.scrolled .nav-logo { color: var(--ink); }
+.nav.scrolled .nav-logo .mark { color: var(--accent); }
+.nav.scrolled .nav-links a { color: var(--ink-soft); }
+.nav.scrolled .nav-links a:not(.nav-cta):hover { color: var(--accent-deep); }
+.nav.scrolled .nav-cta {
+  color: var(--accent-deep) !important;
+  border-color: oklch(45% 0.122 152 / 0.4);
+}
+.nav.scrolled .nav-cta:hover { background: var(--accent); border-color: var(--accent); color: var(--canvas) !important; }
+
+.nav-hamburger { display: none; }
+
+@media (max-width: 780px) {
+  .nav-links { display: none; }
+  .nav-hamburger {
+    display: flex; flex-direction: column; gap: 5px;
+    background: none; border: none; cursor: pointer; padding: .95rem;
+  }
+  .hamburger-bar {
+    width: 22px; height: 1.5px; background: var(--on-dark); transition: all .3s;
+  }
+  .nav.scrolled .hamburger-bar { background: var(--ink); }
+  .nav-links.open {
+    display: flex; flex-direction: column; gap: 1.3rem;
+    position: fixed; top: 0; left: 0; right: 0;
+    min-height: clamp(300px, 38vh, 380px);
+    /* top padding clears the nav bar's own height (logo/hamburger row) —
+       without it, the first link sits underneath those controls, which
+       paint above this panel (z-index: -1) and silently swallow the tap */
+    padding: 5rem 0 1.8rem;
+    background: var(--band);
+    box-shadow: 0 24px 40px -20px oklch(20% 0.042 168 / 0.45);
+    align-items: center; justify-content: center; z-index: -1;
+  }
+  .nav-links.open a {
+    display: inline-flex; align-items: center; justify-content: center;
+    min-height: 44px; padding: 0 .5rem;
+    color: var(--on-dark); font-size: 1rem;
+  }
+  .nav-links.open .nav-cta {
+    margin-top: .6rem; padding: .95rem 1.9rem;
+  }
+
+  /* .nav.scrolled ties in specificity with the rules below, so these must
+     stay last: the dropdown panel is always on the dark band regardless of
+     scroll position, and logo/links/hamburger must stay light to match it. */
+  .nav.menu-open .nav-logo { color: var(--on-dark); }
+  .nav.menu-open .nav-logo .mark { color: var(--gold); }
+  .nav.menu-open .nav-links a { color: var(--on-dark); }
+  .nav.menu-open .nav-cta { color: var(--on-dark) !important; border-color: oklch(95.9% 0.008 79 / 0.35); }
+  .nav.menu-open .hamburger-bar { background: var(--on-dark); }
+}

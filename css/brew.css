@@ -1,0 +1,112 @@
+/* ============================================================
+   BREW — interactive steep timer
+   ============================================================ */
+.brew { padding: var(--section-y) 0; }
+.brew-grid {
+  display: grid; grid-template-columns: 1.1fr 1fr;
+  gap: clamp(2.5rem, 6vw, 5.5rem); align-items: center;
+}
+
+.tea-picker { display: flex; gap: .6rem; flex-wrap: wrap; margin-bottom: 2rem; }
+.tea-pick {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-height: 44px;
+  font: 600 .72rem var(--sans); letter-spacing: .18em; text-transform: uppercase;
+  padding: .55rem 1.15rem; border-radius: 99px; cursor: pointer;
+  background: transparent; color: var(--ink-soft);
+  border: 1.5px solid oklch(24% 0.022 55 / 0.22);
+  transition: all .35s var(--ease-out);
+}
+.tea-pick:hover { border-color: var(--accent); color: var(--accent); }
+.tea-pick[aria-pressed="true"] {
+  background: var(--accent); border-color: var(--accent); color: var(--canvas);
+}
+
+.brew-steps { display: flex; flex-direction: column; gap: 1.6rem; }
+.brew-step { display: flex; gap: 1.4rem; align-items: baseline; }
+.step-num {
+  font-family: var(--serif); font-style: italic; font-weight: 300;
+  font-size: 1.6rem; color: var(--accent); flex-shrink: 0; width: 2.4rem;
+}
+.step-title {
+  font-family: var(--serif); font-weight: 400; font-size: 1.25rem;
+  margin-bottom: .35rem;
+}
+.step-desc { color: var(--ink-soft); font-size: .96rem; line-height: 1.65; max-width: 46ch; }
+.step-desc strong { color: var(--ink); font-weight: 600; }
+.step-desc .live { color: var(--accent-deep); font-weight: 600; }
+
+/* the cup */
+.steeper {
+  position: relative;
+  display: flex; flex-direction: column; align-items: center; gap: 1.6rem;
+}
+.steeper::before {
+  content: ""; position: absolute;
+  width: 130%; height: 110%;
+  top: -5%; left: -15%; z-index: -1;
+  background: radial-gradient(ellipse 50% 45% at 50% 42%,
+    oklch(52% 0.145 152 / 0.09), transparent 70%);
+  pointer-events: none;
+}
+.cupside { position: relative; width: min(320px, 78vw); }
+.cup-svg {
+  width: 100%; height: auto; display: block;
+  filter: drop-shadow(0 26px 32px oklch(24% 0.022 55 / 0.16));
+}
+#liquidG { transition: transform 1.8s var(--ease-soft); }
+.wave { animation: waveSlide 5s ease-in-out infinite alternate; }
+@keyframes waveSlide { from { transform: translateX(0); } to { transform: translateX(-26px); } }
+.leaf {
+  opacity: 0; transition: opacity 1.2s;
+  animation: leafSway 6s ease-in-out infinite alternate;
+}
+.steeper.steeping .leaf { opacity: .6; }
+.steeper.done .leaf { opacity: .35; }
+@keyframes leafSway {
+  from { transform: translate(0, 0) rotate(0deg); }
+  to   { transform: translate(7px, 5px) rotate(16deg); }
+}
+.steam {
+  position: absolute; top: 6%; left: 50%; width: 60px; height: 44px;
+  transform: translateX(-50%); opacity: 0; transition: opacity .8s;
+  pointer-events: none;
+}
+.steeper.steeping .steam, .steeper.done .steam { opacity: 1; }
+.steam span {
+  position: absolute; bottom: 0; width: 1.5px; height: 30px;
+  background: linear-gradient(to top, oklch(44% 0.027 58 / 0.35), transparent);
+  border-radius: 99px; animation: steamRise 2.6s var(--ease-soft) infinite;
+}
+.steam span:nth-child(1) { left: 14px; animation-delay: 0s; }
+.steam span:nth-child(2) { left: 30px; animation-delay: .9s; }
+.steam span:nth-child(3) { left: 46px; animation-delay: 1.7s; }
+@keyframes steamRise {
+  0% { transform: translateY(8px) scaleY(.4); opacity: 0; }
+  40% { opacity: 1; }
+  100% { transform: translateY(-22px) scaleY(1.1) translateX(4px); opacity: 0; }
+}
+.cup-time {
+  position: relative; z-index: 2;
+  font-family: var(--sans); font-weight: 600;
+  font-size: 2rem; letter-spacing: .1em; color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+.steeper.done .cup-time { color: var(--accent-deep); }
+.cup-meta {
+  display: flex; gap: 2.2rem; align-items: center;
+  font: 600 .7rem var(--sans); letter-spacing: .24em;
+  text-transform: uppercase; color: var(--ink-soft);
+}
+.cup-meta strong { color: var(--accent-deep); font-weight: 600; }
+.steep-status {
+  min-height: 1.4rem;
+  font-family: var(--serif); font-style: italic; font-weight: 300;
+  font-size: 1.05rem; color: var(--ink-soft); text-align: center;
+}
+.steeper.done .steep-status { color: var(--accent-deep); }
+
+@media (max-width: 880px) {
+  .brew-grid { grid-template-columns: 1fr; }
+  .steeper { order: -1; }
+}
