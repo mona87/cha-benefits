@@ -4,7 +4,7 @@ An editorial green-tea brand site: warm OKLCH paper tones, drifting blob-frame
 photography, an interactive steep timer, and a newsletter signup backed by
 [Resend](https://resend.com). Redesign of the original `cha_website` project.
 
-**Live:** [teabenefits.vercel.app](https://teabenefits.vercel.app/)
+**Live:** [chabenefits.vercel.app](https://chabenefits.vercel.app/)
 **Design system:** [cha-design-system.vercel.app](https://cha-design-system.vercel.app/)
 
 ## Stack
