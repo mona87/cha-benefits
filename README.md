@@ -5,6 +5,7 @@ photography, an interactive steep timer, and a newsletter signup backed by
 [Resend](https://resend.com). Redesign of the original `cha_website` project.
 
 **Live:** [chabenefits.vercel.app](https://chabenefits.vercel.app/)
+**Case study:** [cha-case-study.vercel.app](https://cha-case-study.vercel.app/)
 **Design system:** [cha-design-system.vercel.app](https://cha-design-system.vercel.app/)
 
 ## Stack
