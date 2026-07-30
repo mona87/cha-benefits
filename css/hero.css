@@ -23,7 +23,10 @@
 }
 .hero-content {
   position: relative; z-index: var(--z-content);
-  padding: clamp(7rem, 14vh, 10rem) 0 clamp(5rem, 10vh, 7rem);
+  /* longhands only — a `padding` shorthand here would zero out the
+     horizontal padding inherited from .wrap and let text hit the viewport edge */
+  padding-top: clamp(7rem, 14vh, 10rem);
+  padding-bottom: clamp(5rem, 10vh, 7rem);
   max-width: 880px;
 }
 .hero-kicker {
@@ -79,13 +82,22 @@
   letter-spacing: .42em; text-transform: uppercase;
   color: oklch(95.9% 0.008 79 / 0.38);
 }
-@media (max-width: 780px) { .hero-glyph { display: none; } }
+@media (max-width: 780px) {
+  .hero-glyph { display: none; }
+  .hero-content { text-align: center; }
+  /* centered layout: the leading dash would sit stranded at the left edge */
+  .hero-kicker::before { display: none; }
+  .hero-sub { margin-left: auto; margin-right: auto; }
+  .hero-actions { justify-content: center; }
+}
 @media (max-width: 420px) {
   .hero-headline { font-size: clamp(2.6rem, 13vw, 3.4rem); }
 }
 
 .scroll-cue {
-  position: absolute; left: 50%; bottom: 2.2rem; transform: translateX(-50%);
+  /* centered via left/right + flex, NOT translateX(-50%) — the heroFadeUp
+     animation overwrites `transform`, which would undo a translate-based center */
+  position: absolute; left: 0; right: 0; bottom: 2.2rem;
   z-index: var(--z-content); display: flex; flex-direction: column; align-items: center; gap: .6rem;
   color: oklch(95.9% 0.008 79 / 0.5);
   font: 600 .62rem var(--sans); letter-spacing: .34em; text-transform: uppercase;
@@ -104,25 +116,47 @@
 }
 
 /* ============================================================
-   MARQUEE — variety ribbon
+   VARIETY RIBBON — static
+
+   Formerly a scrolling marquee of eight teas. Now the four the steep timer
+   actually brews, spread across the site's content column so the band does
+   not read as a small cluster marooned in a lot of empty green.
    ============================================================ */
 .marquee {
   background: var(--band-deep);
   border-top: 1px solid oklch(95.9% 0.008 79 / 0.08);
-  overflow: hidden; padding: 1.1rem 0;
+  padding: 1.1rem clamp(1rem, 5vw, 3rem);
   position: relative; z-index: 3;
 }
+/* Each name is its own flex item so the four can be distributed across the
+   site's 1200px content width, rather than clustering in the middle of a
+   full-bleed band. This also lines the ribbon up with every other section. */
 .marquee-track {
-  display: flex; gap: 3.5rem; width: max-content;
-  animation: marqueeSlide 38s linear infinite;
+  display: flex; flex-wrap: wrap;
+  align-items: center; justify-content: space-between;
+  gap: .4rem 1rem;
+  max-width: 1200px; margin-inline: auto;
 }
-.marquee:hover .marquee-track,
-.marquee.offscreen .marquee-track { animation-play-state: paused; }
 .marquee-item {
-  display: inline-flex; align-items: center; gap: 3.5rem;
   font-family: var(--serif); font-weight: 300; font-style: italic;
   font-size: 1.15rem; color: oklch(95.9% 0.008 79 / 0.55);
-  white-space: nowrap;
+  letter-spacing: 0.06em; white-space: nowrap;
 }
-.marquee-item .dot { color: var(--gold); font-style: normal; font-size: .7rem; }
-@keyframes marqueeSlide { to { transform: translateX(-50%); } }
+.marquee .dot {
+  color: var(--gold); font-style: normal; font-size: .7rem;
+}
+
+/* Below 480px the four names no longer fit at full size and one would drop to
+   a second line on its own, trailing an orphaned dot. Shrink the type instead
+   so the ribbon stays a single, even row. */
+@media (max-width: 480px) {
+  .marquee-track { gap: 0 .7rem; }
+  .marquee-item { font-size: .98rem; letter-spacing: .03em; }
+}
+
+@media (max-width: 420px) {
+  .marquee { padding-inline: 1rem; }
+  .marquee-track { gap: 0 .5rem; }
+  .marquee-item { font-size: .86rem; letter-spacing: .02em; }
+  .marquee .dot { font-size: .55rem; }
+}

@@ -26,6 +26,9 @@
 /* ─── Reset ──────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 @media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
+/* clip (not hidden) blocks sideways panning on mobile Safari without
+   creating a second scroll container */
+html { overflow-x: clip; }
 body {
   font-family: var(--sans);
   background: var(--canvas);
@@ -67,9 +70,17 @@ a { text-decoration: none; color: inherit; }
 }
 
 /* ─── Grain overlay ──────────────────── */
+/* .grain is oversized so its shift animation never exposes an edge, but a
+   fixed element is clipped by NOTHING — not even body{overflow-x:hidden} —
+   so on iOS Safari the page could be panned sideways to reach it. The
+   .grain-clip wrapper pins a viewport-sized clipping box around it. */
+.grain-clip {
+  position: fixed; inset: 0; overflow: clip;
+  pointer-events: none; z-index: 120;
+}
 .grain {
-  position: fixed; inset: -50%; width: 200%; height: 200%;
-  pointer-events: none; z-index: 120; opacity: .07; will-change: transform;
+  position: absolute; inset: -50%; width: 200%; height: 200%;
+  pointer-events: none; opacity: .07; will-change: transform;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='240' height='240' filter='url(%23n)' opacity='0.55'/%3E%3C/svg%3E");
   animation: grainShift 1.2s steps(4) infinite;
 }

@@ -21,19 +21,19 @@
     href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300&family=Karla:wght@400;500;600&display=swap"
     rel="stylesheet">
 
-  <link rel="stylesheet" href="css/base.css">
-  <link rel="stylesheet" href="css/nav.css">
-  <link rel="stylesheet" href="css/hero.css">
-  <link rel="stylesheet" href="css/benefits.css">
-  <link rel="stylesheet" href="css/ritual.css">
-  <link rel="stylesheet" href="css/brew.css">
-  <link rel="stylesheet" href="css/signup.css">
+  <link rel="stylesheet" href="css/base.css?v=20260730-2">
+  <link rel="stylesheet" href="css/nav.css?v=20260730-2">
+  <link rel="stylesheet" href="css/hero.css?v=20260730-2">
+  <link rel="stylesheet" href="css/benefits.css?v=20260730-2">
+  <link rel="stylesheet" href="css/ritual.css?v=20260730-2">
+  <link rel="stylesheet" href="css/brew.css?v=20260730-2">
+  <link rel="stylesheet" href="css/signup.css?v=20260730-2">
 </head>
 
 <body>
 
   <a href="#main-content" class="skip-link">Skip to main content</a>
-  <div class="grain" aria-hidden="true"></div>
+  <div class="grain-clip" aria-hidden="true"><div class="grain"></div></div>
 
   <!-- ═══════════ NAV ═══════════ -->
   <nav id="site-nav" class="nav" role="navigation" aria-label="Main navigation">
@@ -84,19 +84,21 @@
       <div class="scroll-cue" aria-hidden="true">Pour</div>
     </header>
 
-    <!-- ═══════════ MARQUEE ═══════════ -->
+    <!-- ═══════════ VARIETY RIBBON ═══════════ -->
+    <!-- Static, and limited to the four teas the steep timer actually brews
+         (see TEAS in js/brew.js). The earlier list also carried Genmaicha,
+         Kabusecha, Kukicha and Longjing, which appeared nowhere else on the
+         site; Longjing is Chinese besides, so it sat oddly among Japanese
+         greens. Kept in shade order: full sun, shaded, powdered, then roasted. -->
     <div class="marquee" aria-hidden="true">
       <div class="marquee-track">
-        <span class="marquee-item">
-          Sencha <span class="dot">●</span> Matcha <span class="dot">●</span> Gyokuro <span class="dot">●</span>
-          Hojicha <span class="dot">●</span> Genmaicha <span class="dot">●</span> Kabusecha <span class="dot">●</span>
-          Longjing <span class="dot">●</span> Kukicha <span class="dot">●</span>
-        </span>
-        <span class="marquee-item">
-          Sencha <span class="dot">●</span> Matcha <span class="dot">●</span> Gyokuro <span class="dot">●</span>
-          Hojicha <span class="dot">●</span> Genmaicha <span class="dot">●</span> Kabusecha <span class="dot">●</span>
-          Longjing <span class="dot">●</span> Kukicha <span class="dot">●</span>
-        </span>
+        <span class="marquee-item">Sencha</span>
+        <span class="dot">●</span>
+        <span class="marquee-item">Gyokuro</span>
+        <span class="dot">●</span>
+        <span class="marquee-item">Matcha</span>
+        <span class="dot">●</span>
+        <span class="marquee-item">Hojicha</span>
       </div>
     </div>
 
@@ -355,7 +357,6 @@
   <script src="js/hero-canvas.js" defer></script>
   <script src="js/grain.js" defer></script>
   <script src="js/nav.js" defer></script>
-  <script src="js/marquee.js" defer></script>
   <script src="js/blob-pause.js" defer></script>
   <script src="js/reveal.js" defer></script>
   <script src="js/benefits.js" defer></script>

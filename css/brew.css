@@ -1,7 +1,9 @@
 /* ============================================================
    BREW — interactive steep timer
    ============================================================ */
-.brew { padding: var(--section-y) 0; }
+/* overflow: hidden contains the .steeper::before glow (width 130%, left -15%),
+   which otherwise widens the page beyond the viewport on mobile */
+.brew { padding: var(--section-y) 0; overflow: hidden; }
 .brew-grid {
   display: grid; grid-template-columns: 1.1fr 1fr;
   gap: clamp(2.5rem, 6vw, 5.5rem); align-items: center;
